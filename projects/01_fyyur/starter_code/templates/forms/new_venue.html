@@ -6,7 +6,7 @@
       <h3 class="form-heading">List a new venue <a href="{{ url_for('index') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
       <div class="form-group">
         <label for="name">Name</label>
-        {{ form.name(class_ = 'form-control', autofocus = true) }}
+        {{ form.name(class_ = 'form-control', placeholder='Name', autofocus = true) }}
       </div>
       <div class="form-group">
           <label>City & State</label>
@@ -21,7 +21,7 @@
       </div>
       <div class="form-group">
         <label for="address">Address</label>
-        {{ form.address(class_ = 'form-control', autofocus = true) }}
+        {{ form.address(class_ = 'form-control', placeholder='Address', autofocus = true) }}
       </div>
       <div class="form-group">
           <label for="phone">Phone</label>
@@ -30,11 +30,23 @@
       <div class="form-group">
         <label for="genres">Genres</label>
         <small>Ctrl+Click to select multiple</small>
-        {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', id=form.state, autofocus = true) }}
+        {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', id=form.genres, autofocus = true) }}
       </div>
       <div class="form-group">
-          <label for="genres">Facebook Link</label>
-          {{ form.facebook_link(class_ = 'form-control', placeholder='http://', id=form.state, autofocus = true) }}
+          <label for="facebook_link">Facebook Link</label>
+          {{ form.facebook_link(class_ = 'form-control', placeholder='http://', autofocus = true) }}
+        </div>
+      <div class="form-group">
+          <label for="website">Website</label>
+          {{ form.website(class_ = 'form-control', placeholder='Website', autofocus = true) }}
+        </div>
+      <div class="form-group">
+          <label for="seeking_talent">Seeking talent?</label>
+          {{ form.seeking_talent(class_ = 'form-control', placeholder='Yes or No', autofocus = true) }}
+        </div>
+      <div class="form-group">
+          <label for="seeking_description">Seeking description</label>
+          {{ form.seeking_description(class_ = 'form-control', placeholder='Description', autofocus = true) }}
         </div>
       <input type="submit" value="Create Venue" class="btn btn-primary btn-lg btn-block">
     </form>

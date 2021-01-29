@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
 	<div class="col-sm-6">
-		<h1 class="monospace">
+		 <h1 class="monospace">
 			{{ venue.name }}
 		</h1>
 		<p class="subtitle">
@@ -73,6 +73,9 @@
 		</div>
 		{% endfor %}
 	</div>
+	<form method="post" action="{{ url_for('delete_venue', venue_id=venue.id) }}">
+		<input class="btn btn-primary btn-lg btn-block" type="submit" name="delete" value="Delete Venue">
+	</form>
 </section>
 
 {% endblock %}
