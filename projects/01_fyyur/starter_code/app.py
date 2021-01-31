@@ -200,13 +200,13 @@ def show_venue(venue_id):
       'artist_id': artist.id,
       "artist_name": artist.name,
       "artist_image_link": artist.image_link,
-      "start_time": show.start_time.strftime("%m,%d,%y,%H,%M")
+      "start_time": show.start_time.strftime('%Y-%m-%d %H:%M')
     } for artist, show in past_shows]),
     'upcoming_shows': list([{
       'artist_id': artist.id,
       'artist_name': artist.name,
       'artist_image_link': artist.image_link,
-      'start_time': show.start_time.strftime("%m/%d/%y,%H,%M")
+      'start_time': show.start_time.strftime('%Y-%m-%d %H:%M')
     } for artist, show in upcoming_shows]),
     'past_shows_count': len(past_shows),
     'upcoming_shows_count': len(upcoming_shows)
@@ -350,13 +350,13 @@ def show_artist(artist_id):
       'venue_id': venue.id,
       "venue_name": venue.name,
       "venue_image_link": venue.image_link,
-      "start_time": show.start_time.strftime("%m,%d,%y,%H,%M")
+      "start_time": show.start_time.strftime('%Y-%m-%d %H:%M')
     } for venue, show in past_shows]),
     'upcoming_shows': list([{
       'venue': venue.id,
       'venue_name': venue.name,
       'venue_image_link': venue.image_link,
-      'start_time': show.start_time.strftime("%m/%d/%y,%H,%M")
+      'start_time': show.start_time.strftime('%Y-%m-%d %H:%M')
     } for venue, show in upcoming_shows]),
     'past_shows_count': len(past_shows),
     'upcoming_shows_count': len(upcoming_shows)
@@ -513,7 +513,7 @@ def shows():
       "artist_id": artist.id,
       "artist_name": artist.name,
       "artist_image_link": artist.image_link,
-      "start_time": show.start_time.strftime("%m/%d/%y,%H,%M")
+      "start_time": show.start_time.strftime('%Y-%m-%d %H:%M')
 
     }])
   
