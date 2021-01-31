@@ -136,7 +136,7 @@ def venues():
 
 @app.route('/venues/search', methods=['POST','GET'])
 def search_venues():
-  # TODO: implement search on venues with partial string search. Ensure 
+
   
   search_term = request.form.get('search_term', '')
   venues = db.session.query(Venue).filter(Venue.name.ilike('%' + search_term + '%')).all()
@@ -402,7 +402,7 @@ def edit_artist_submission(artist_id):
     artist.facebook_link = request.form['facebook_link']
     artist.image_link = request.form['image_link']
     artist.website = request.form['website']
-    artist.seeking_venue = request.form['seeking_venue']
+    artist.seeking_venue = True if request.form['seeking_venue']== 'y' else False
     artist.seeking_description = request.form['seeking_description']
     db.session.commit()
   
@@ -513,7 +513,7 @@ def shows():
       "artist_id": artist.id,
       "artist_name": artist.name,
       "artist_image_link": artist.image_link,
-      "start_time": show.start_time.strftime("%m/%d/%Y, %H:%M")
+      "start_time": show.start_time.strftime("%m/%d/%y,%H,%M")
 
     }])
   

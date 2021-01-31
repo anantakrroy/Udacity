@@ -36,6 +36,15 @@
           <label for="facebook_link">Facebook Link</label>
           {{ form.facebook_link(class_ = 'form-control', placeholder='http://', autofocus = true) }}
         </div>
+      <div class="form-boolean">
+          <label for="seeking_talent"> Seeking Artist?</label>
+          <small>Tick for Yes</small>
+          {{ form.seeking_talent(class_ = 'form-control', autofocus = true) }}
+      </div>
+      <div class="form-group">
+          <label for="seeking_description"> What type of Artist are you seeking?</label>
+          {{ form.seeking_description(class_ = 'form-control', placeholder='Description', autofocus = true) }}
+      </div>
       <input type="submit" value="Edit Venue" class="btn btn-primary btn-lg btn-block" formaction="{{ url_for('edit_venue', venue_id=venue.id) }}">
       <input type="submit" value="Delete Venue" class="btn btn-primary btn-lg btn-block" formaction="{{ url_for('delete_venue', venue_id=venue.id) }}">
     </form>
