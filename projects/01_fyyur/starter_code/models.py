@@ -8,6 +8,7 @@ app.config.from_object('config')
 moment = Moment(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+db.create_all()
 
 
 class Venue(db.Model):
@@ -63,3 +64,4 @@ class Show(db.Model):
 
   def __repr__(self):
     return f'<shows {self.artist_id} {self.venue_id}>'
+

@@ -86,12 +86,12 @@ def search_venues():
       "name": venue.name,
       "num_upcoming_shows": num_upcoming_shows
     })
-  response={
+  results={
     "count": len(venues),
     "data": data
   }
 
-  return render_template('pages/search_venues.html', results=response, search_term=request.form.get('search_term', ''))
+  return render_template('pages/search_venues.html', results=results, search_term=request.form.get('search_term', ''))
 
 @app.route('/venues/<int:venue_id>')
 def show_venue(venue_id):
@@ -168,10 +168,10 @@ def create_venue_submission():
         form.populate_obj(venue)
         db.session.add(venue)
         db.session.commit()
-        flash('Venue ' + request.form['name'] + ' was successfully listed!')
+        flash('The Venue was successfully listed!')
     except ValueError as e:
         print(e)
-        flash('An error occurred. Venue ' + vname + ' could not be listed.')
+        flash('An error occurred. The Venue could not be listed.')
         db.session.rollback()
     finally:
         db.session.close()
@@ -348,9 +348,9 @@ def edit_artist_submission(artist_id):
     db.session.close()
   
   if not error:
-    flash('Artist updated!')
+    flash('The Artist has been updated!')
   if error:
-    flash('Artist could not be updated!')
+    flash('The Artist could not be updated!')
         
   return redirect(url_for('show_artist', artist_id=artist_id))
 
@@ -385,12 +385,12 @@ def edit_venue_submission(venue_id):
         venue.seeking_talent = form.seeking_talent.data
         venue.seeking_description = form.seeking_description.data
         db.session.commit()
-        flash('The Venue ' + request.form['name'] + ' has been successfully updated!')
+        flash('The Venue has been successfully updated!')
     except Exception as e:
           print(e)
           print(sys.exc_info())
           db.session.rollback()
-          flash('Error! Venue could not be updated.')
+          flash('The Venue could not be updated!')
     finally:
           db.session.close()
   
@@ -413,10 +413,10 @@ def create_artist_submission():
         form.populate_obj(artist)
         db.session.add(artist)
         db.session.commit()
-        flash('Artist ' + request.form['name'] + ' was successfully listed!')
+        flash('The Artist was successfully listed!')
     except ValueError as e:
         print(e)
-        flash('An error occurred. Venue ' + vname + ' could not be listed.')
+        flash('The Artist could not be listed!')
         db.session.rollback()
     finally:
         db.session.close()
