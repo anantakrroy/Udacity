@@ -28,24 +28,36 @@ def create_app(test_config=None):
 
 #   '''
 #   @TODO: 
-#   Create an endpoint to handle GET requests 
-#   for all available categories.
-#   '''
+  # Create an endpoint to handle GET requests 
+  # for all available categories.
+  # '''
+
   @app.route('/categories')
   def get_categories():
     categories = Category.query.order_by(Category.id).all()
+    categories_format={}
+  
 
-    if len(categories) ==0:
+    if len(categories) == 0:
       abort(404)
+
+    for category in categories:
+      categories_format[category.id] = category.type
     
 
     return jsonify({
       'success': True,
-      'categories': {category.id : category.type for category in categories},
-      'total': len(categories)
+      'categories': categories_format
     })
 
-
+  # @app.route("/categories")
+  # def get_categories():
+  #       categories = list(map(Category.format, Category.query.all()))
+  #       result = {
+  #           "success": True,
+  #           "categories": categories
+  #       }
+  #       return jsonify(result)
 
 #   '''
 #   @TODO: 
