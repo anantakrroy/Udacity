@@ -79,7 +79,7 @@ def create_app(test_config=None):
     categories = Category.query.all()
     categories_format= [category.format() for category in categories]
 
-    if len(questions_format == 0):
+    if len(questions_format) == 0:
       abort(404)
 
     return jsonify({
