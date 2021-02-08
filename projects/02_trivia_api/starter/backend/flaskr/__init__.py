@@ -2,11 +2,23 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_paginate import Pagination, get_page_args
 import random
 
 from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
+
+# def pagination(request, selection):
+#   page = request.args.get('page',1,type=int)
+#   start = (page - 1) * QUESTIONS_PER_PAGE
+#   end = start + QUESTIONS_PER_PAGE
+
+#   questions = [question.format() for question in selection]
+#   questions_current = questions[start:end]
+#   return questions_current
+
+
 
 def create_app(test_config=None):
   # create and configure the app
@@ -35,14 +47,12 @@ def create_app(test_config=None):
   @app.route('/categories')
   def get_categories():
     categories = Category.query.order_by(Category.id).all()
-    categories_format={}
+    categories_format= [category.format() for category in categories]
   
 
     if len(categories) == 0:
       abort(404)
 
-    for category in categories:
-      categories_format[category.id] = category.type
     
 
     return jsonify({
@@ -50,14 +60,7 @@ def create_app(test_config=None):
       'categories': categories_format
     })
 
-  # @app.route("/categories")
-  # def get_categories():
-  #       categories = list(map(Category.format, Category.query.all()))
-  #       result = {
-  #           "success": True,
-  #           "categories": categories
-  #       }
-  #       return jsonify(result)
+  
 
 #   '''
 #   @TODO: 
@@ -65,6 +68,27 @@ def create_app(test_config=None):
 #   including pagination (every 10 questions). 
 #   This endpoint should return a list of questions, 
 #   number of total questions, current category, categories. 
+
+  @app.route('/questions')
+  def get_questions():
+    questions = Question.query.order_by(Question.id).all()
+    questions_format = [question.format() for question in questions]
+    page = request.args.get('page', 1, type=int)
+    start = (page-1) * 10
+    end = start + 10
+    categories = Category.query.all()
+    categories_format= [category.format() for category in categories]
+
+    if len(questions_format == 0):
+      abort(404)
+
+    return jsonify({
+      'success': True,
+      'questions': questions_format[start:end],
+      'categories': categories_format,
+      "total_questions": len(Question.query.all())
+      })
+
 
 #   TEST: At this point, when you start the application
 #   you should see questions and categories generated,
