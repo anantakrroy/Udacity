@@ -133,7 +133,7 @@ def create_app(test_config=None):
 #   which will require the question and answer text, 
 #   category, and difficulty score.
 
-  @app.route('questions/add', methods=['POST'])
+  @app.route('/questions/add', methods=['POST'])
   def add_question():
     error = False
     data = request.get_json()
@@ -146,8 +146,9 @@ def create_app(test_config=None):
     
       data.insert()
 
-    except:
+    except Exception as e:
       error = True
+      print(e)
       if error:
         abort(500)
       else:
