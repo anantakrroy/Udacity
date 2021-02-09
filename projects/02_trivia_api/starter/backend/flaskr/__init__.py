@@ -100,6 +100,29 @@ def create_app(test_config=None):
 #   @TODO: 
 #   Create an endpoint to DELETE question using a question ID. 
 
+
+  @app.route('/questions/<int:question_id>', methods=['DELETE'])
+  def delete_question(question_id):
+    question = Question.query.get(question_id)
+
+    if question is None:
+      abort(404)
+    
+
+    try:
+      question.delete()
+    except Exception as e:
+      print(e)
+      abort(422)
+
+
+    else:
+        return jsonify({
+          'success': True,
+          'deleted': question_id
+        })
+
+
 #   TEST: When you click the trash icon next to a question, the question will be removed.
 #   This removal will persist in the database and when you refresh the page. 
 #   '''
@@ -109,6 +132,31 @@ def create_app(test_config=None):
 #   Create an endpoint to POST a new question, 
 #   which will require the question and answer text, 
 #   category, and difficulty score.
+
+  @app.route('questions/add', methods=['POST'])
+  def add_question():
+    error = False
+    data = request.get_json()
+    try:
+
+      question = data['question']
+      answer = data['answer']
+      difficulty = data['difficulty']
+      category = data['category']
+    
+      data.insert()
+
+    except:
+      error = True
+      if error:
+        abort(500)
+      else:
+        return jsonify({
+          'success': True,
+          'question': data
+        })
+
+
 
 #   TEST: When you submit a question on the "Add" tab, 
 #   the form will clear and the question will appear at the end of the last page
@@ -170,6 +218,16 @@ def create_app(test_config=None):
             "error": 422,
             "message": "This is unprocessable"
         }), 422
+
+  @app.errorhandler(500)
+  def internal_server(error):
+        return jsonify({
+            "success": False,
+            "error": 500,
+            "message": "The server does not know how to handle this"
+        }), 500
+
+  
   return app
 
     
