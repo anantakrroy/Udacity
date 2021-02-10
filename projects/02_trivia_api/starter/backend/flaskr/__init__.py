@@ -46,11 +46,11 @@ def create_app(test_config=None):
 
   @app.route('/categories')
   def get_categories():
-    categories = Category.query.order_by(Category.id).all()
-    categories_format= [category.format() for category in categories]
+    categories_format = {category.id: category.type for category in Category.query.order_by(Category.id).all()}
+    
   
 
-    if len(categories) == 0:
+    if len(categories_format) == 0:
       abort(404)
 
     
@@ -76,8 +76,8 @@ def create_app(test_config=None):
     page = request.args.get('page', 1, type=int)
     start = (page-1) * 10
     end = start + 10
-    categories = Category.query.all()
-    categories_format= [category.format() for category in categories]
+    categories_format = {category.id: category.type for category in Category.query.order_by(Category.id).all()}
+   
 
     if len(questions_format) == 0:
       abort(404)
@@ -133,18 +133,21 @@ def create_app(test_config=None):
 #   which will require the question and answer text, 
 #   category, and difficulty score.
 
-  @app.route('/questions/add', methods=['POST'])
+  @app.route('/questions', methods=['POST'])
   def add_question():
     error = False
-    data = request.get_json()
+    new_question = request.get_json()
     try:
 
-      question = data['question']
-      answer = data['answer']
-      difficulty = data['difficulty']
-      category = data['category']
-    
-      data.insert()
+      question = new_question['question']
+      answer = new_question['answer']
+      difficulty = new_question['difficulty']
+      category = new_question['category']
+      
+      
+      add_question = Question(question=question, answer=answer,
+        difficulty=difficulty, category=category)
+      Question.insert(add_question)
 
     except Exception as e:
       error = True
@@ -154,7 +157,7 @@ def create_app(test_config=None):
       else:
         return jsonify({
           'success': True,
-          'question': data
+          'question': add_question
         })
 
 
